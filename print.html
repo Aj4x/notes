@@ -89,7 +89,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="csharp/index.html"><strong aria-hidden="true">1.</strong> C#</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="csharp/index.html"><strong aria-hidden="true">1.</strong> C#</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="csharp/ilogger-withscope.html"><strong aria-hidden="true">1.1.</strong> ILogger.WithScope</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -177,8 +177,28 @@
                         <h1 id="c"><a class="header" href="#c">C#</a></h1>
 <h2 id="extension-methods"><a class="header" href="#extension-methods">Extension methods</a></h2>
 <ul>
-<li><a href="csharp/./ilogger-withscope.html">ILogger.WithScope</a></li>
+<li><a href="csharp/ilogger-withscope.html"><code>ILogger.WithScope</code></a></li>
 </ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="ilogger-withscope"><a class="header" href="#ilogger-withscope">ILogger WithScope</a></h1>
+<h2 id="summary"><a class="header" href="#summary">Summary</a></h2>
+<p>In the interests of avoiding repeated <code>ILogger.BeginScope</code> <code>using</code> blocks, I created an extension method to write log messages with a given scope.</p>
+<h2 id="code"><a class="header" href="#code">Code</a></h2>
+<pre><code class="language-C#">public static class LoggerExtensions
+{
+    public static void WithScope&lt;TState&gt;(this ILogger logger, TState state, Action&lt;ILogger&gt; logAction)
+        {
+            using (logger.BeginScope(state))
+            {
+                logAction.Invoke(logger);
+            }
+        }
+}
+</code></pre>
+<h2 id="usage"><a class="header" href="#usage">Usage</a></h2>
+<p>The usage is fairly simple and usually replaces the <code>using</code> block with one line.</p>
+<p>Assuming a collection of properties is in scope during the execution of the function which can be added to during runtime. Variable <code>logProps</code> is of type <code>Dictionary&lt;string, object&gt;</code> and <code>logEvent</code> is an <code>Microsoft.Extensions.Logging.EventId</code>.</p>
+<pre><code class="language-C#">log.WithScope(logProps, l =&gt; l.LogInformation(logEvent, "Log Message: {Property}", "We can still add properties to the message here"));
+</code></pre>
 
                     </main>
 

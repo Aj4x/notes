@@ -2,4 +2,4 @@
 
 ## Extension methods
 
-- [ILogger.WithScope](ilogger-withscope)
+- [ILogger.WithScope](ilogger-withscope.md)

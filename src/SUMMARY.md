@@ -1,3 +1,3 @@
 # Summary
 
-- [C#](src/csharp/README.md)
+- [C#](csharp/README.md)

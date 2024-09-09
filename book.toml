@@ -7,3 +7,5 @@ title = "Ramblings"
 
 [output.html]
 additional-css = ["custom.css"]
+git-repository-url = "https://github.com/Aj4x/note/src"
+edit-url-template = "https://github.com/Aj4x/note/src/{path}"

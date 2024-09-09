@@ -6,4 +6,4 @@ src = "src"
 title = "Ramblings"
 
 [output.html]
-additional-css = [custom.css]
+additional-css = ["custom.css"]
